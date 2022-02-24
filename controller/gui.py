@@ -31,20 +31,20 @@ class Tela_About:
         self.TelAbout.resizable(0, 0)
         self.canvas = Canvas(self.TelAbout, width=380, height=230, bg='#EEE8AA')
         self.canvas.place(x=10, y=10)
-        self.lb1 = Label(self.TelAbout, text="      PUC MInas - Poços de Caldas",
-                         font=('Verdana', '13', 'bold'), bg='#EEE8AA')
-        self.lb1.place(x=20, y=20)
-        self.lb1 = Label(self.TelAbout, text="Método dos Elementos Finitos - Barra",
-                         font=('Verdana', '11'),bg='#EEE8AA')
-        self.lb1.place(x=55, y=80)
+        self.lb1 = Label(self.TelAbout, text="PUC Minas - Poços de Caldas",
+                         font=('Times', '13', 'bold'), bg='#EEE8AA')
+        self.lb1.place(x=80, y=20)
+        self.lb1 = Label(self.TelAbout, text="ESCREVER SOBRE O METODO UTILIZADO",
+                         font=('Times', '11'),bg='#EEE8AA')
+        self.lb1.place(x=50, y=80)
         self.lb1 = Label(self.TelAbout, text="Data : 01/02/2022",
-                         font=('Verdana', '11'), bg='#EEE8AA')
-        self.lb1.place(x=230, y=150)
+                         font=('Times', '11'), bg='#EEE8AA')
+        self.lb1.place(x=50, y=150)
         self.lb1 = Label(self.TelAbout, text="Versão: V1.0",
-                         font=('Verdana', '11'), bg='#EEE8AA')
-        self.lb1.place(x=250, y=130)
-        self.lb1 = Label(self.TelAbout, text="Programadores: -\n\t\t-",
-                         font=('Verdana', '11'), bg='#EEE8AA')
+                         font=('Times', '11'), bg='#EEE8AA')
+        self.lb1.place(x=50, y=130)
+        self.lb1 = Label(self.TelAbout, text="Programadores:  -\n\t\t-",
+                         font=('Times', '11'), bg='#EEE8AA')
         self.lb1.place(x=50, y=200)
 
 class Tela_Principal:
@@ -59,12 +59,12 @@ class Tela_Principal:
         self.canvas = Canvas(self.TelPrin, width=800, height=30, bg='Silver')
         self.canvas.place(x=200, y=510)
         self.Relogio = Label(self.TelPrin, text=self.agora.strftime('%d/%m/%Y       %H:%M:%S'),
-                                           font=('Verdana', '10', 'bold'),
+                                           font=('Times', '10', 'bold'),
                                            bg='#DCDCDC',
                                            relief = "sunken")
         self.Relogio.place(x=5, y=515)
-        self.ajud = Label(self.TelPrin, text="Análise Estrutural utilizando Método dos Elementos finitos de Barras - Versão : V1.0                          " ,
-                                        font=('Verdana', '10', 'bold'),
+        self.ajud = Label(self.TelPrin, text="ESCREVER SOBRE O OBJETIVO DO PROJETO - Versão : V1.0                          " ,
+                                        font=('Times', '10', 'bold'),
                                         bg='Silver',
                                         relief = "sunken")
         self.ajud.place(x=210, y=517)
