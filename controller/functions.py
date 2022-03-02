@@ -14,7 +14,7 @@ nbar = 0
 desl = 0
 delta = 0
 
-def Sub_said(matriz, tipo, Nome_aquivo,bar):
+def Sub_said(matriz, tipo, Nome_aquivo, bar):
     global aux, Descod
 
     arqexcel = load_workbook(Nome_aquivo)

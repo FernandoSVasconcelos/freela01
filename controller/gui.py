@@ -19,7 +19,7 @@ Nome_aquivo = ''
 Carno = 0
 nno = 0
 aberto = 0
-Titulo = 'Nenhum arquivo aberto'
+Titulo = 'TITULO DO PROJETO'
 
 
 class Tela_About:
@@ -43,7 +43,7 @@ class Tela_About:
         self.lb1 = Label(self.TelAbout, text="Versão: V1.0",
                          font=('Times', '11'), bg='#EEE8AA')
         self.lb1.place(x=50, y=130)
-        self.lb1 = Label(self.TelAbout, text="Programadores:  -\n\t\t-",
+        self.lb1 = Label(self.TelAbout, text="Programadores:  -Karolina Ribeiro\n\t       -Lucas Amaro",
                          font=('Times', '11'), bg='#EEE8AA')
         self.lb1.place(x=50, y=200)
 
@@ -77,12 +77,12 @@ class Tela_Principal:
         # ////Cria meunu superior  -  Arquivo
         self.arquivo = Menu(self.Menusup, tearoff=0)  # Cria um menu dentro do menu superior Arquivo
         self.arquivo.add_command(label="Abrir", command=self.Sub_Abrir)  # Adiciona Abrir ao menu
-        self.arquivo.add_command(label="Limpar Área", command=self.Sub_Limpa)  # Adiciona Abrir ao menu
+        self.arquivo.add_command(label="Limpar", command=self.Sub_Limpa)  # Adiciona Abrir ao menu
         self.arquivo.add_command(label="Sair", command=self.Sub_Sair)  # Adiciona sair no sub menu
         self.Menusup.add_cascade(label="Arquivo", menu=self.arquivo)  # Adiciona  cascata
 
         # //  Cria Menu entrada de dados
-        self.Menusup.add_command(label="Entrada Dados", command=self.Entrada_Dados)
+        self.Menusup.add_command(label="Entrada", command=self.Entrada_Dados)
 
        # //  Cria Menu para calcular os esforços
         self.Menusup.add_command(label="Dimensionar", command=self.Sub_Dimensionar)
