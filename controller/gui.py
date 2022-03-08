@@ -49,6 +49,13 @@ class Tela_About:
 
 class Tela_Principal:
     def __init__(self, Raiz):
+        self.vazão = 0
+        self.rugosidade = 0
+        self.teta = 0
+        self.d = 0
+        self.base_menor = 0
+        self.z = 0
+
         self.TelPrin = Raiz
         self.agora = datetime.now()
         self.TelPrin.title(Titulo)
@@ -81,12 +88,6 @@ class Tela_Principal:
         self.arquivo.add_command(label="Sair", command=self.Sub_Sair)  # Adiciona sair no sub menu
         self.Menusup.add_cascade(label="Arquivo", menu=self.arquivo)  # Adiciona  cascata
 
-        # //  Cria Menu entrada de dados
-        self.Menusup.add_command(label="Entrada", command=self.Entrada_Dados)
-
-       # //  Cria Menu para calcular os esforços
-        self.Menusup.add_command(label="Dimensionar", command=self.Sub_Dimensionar)
-
         # //// Cria  Menu superior - Saída de dados
         self.Menusup.add_command(label="Resultados", command=self.Sub_Resultados)
 
@@ -96,12 +97,23 @@ class Tela_Principal:
         # //// Cria  Menu superior - Sair
         self.Menusup.add_command(label="Sair", command=self.Sub_Sair)
 
-        self.areatexto = scrolledtext.ScrolledText(self.TelPrin,
-                                                   width=120,
-                                                   height=26,
-                                                   font=('Consolas', '12'))
 
-        self.areatexto.pack()
+        self.Var1 = StringVar()
+        
+        ChkBttn = Radiobutton(self.TelPrin, width = 15, variable = self.Var1, text = 'Retangular', value = 'Retangular')
+        ChkBttn.place(x = 12, y = 25)
+        
+        ChkBttn2 = Radiobutton(self.TelPrin, width = 15, variable = self.Var1, text = 'Triangular', value = 'Triangular')
+        ChkBttn2.place(x = 10, y = 55)
+
+        ChkBttn3 = Radiobutton(self.TelPrin, width = 15, variable = self.Var1, text = 'Trapezoidal Simétrico', value = 'Trapezoidal Simétrico')
+        ChkBttn3.place(x = 40, y = 85)
+
+        button1 = Button(self.TelPrin, 
+                        text = "Calcular",
+                        command=self.Entrada_Dados)
+        button1.place(x = 250, y = 60)
+
         #  atualização de tela
         self.alteracao()
 
@@ -138,10 +150,6 @@ class Tela_Principal:
         if entrada_arquivo != None:
             Nome_aquivo = entrada_arquivo.name
             Titulo = Nome_aquivo
-            self.TelPrin.title(Titulo)
-            self.areatexto.delete('1.0', END)
-            self.areatexto.insert(END, str(Titulo)+'\n')
-            self.areatexto.update()
 
     def Sub_Limpa(self):
          self.areatexto.delete('1.0',END)
@@ -151,271 +159,24 @@ class Tela_Principal:
       if Nome_aquivo == '' :
           messagebox.showinfo('ABOUT', 'Abra um arquivo Primeiro')
       else:
-        # Abre o arquivo do excel para entrada de dados
-        t = subprocess.Popen(Nome_aquivo, shell=True)
-        t.wait()
-
-        nno = numero_nos(Nome_aquivo)  # Determina o número de nós
-        nbar = numero_barras(Nome_aquivo)  # Determina o número de barras
-
-        Matno = np.zeros((nno, 10))
-        Matbar = np.zeros((nbar, 11))
-        Carno = np.zeros((nno, 4))
-        Carbar = np.zeros((nbar, 7))
-
-        # faz a leitura da pasta "Entrada de nós
 
         arqexcel = load_workbook(Nome_aquivo)
-        Pastatraba = arqexcel["Entrada Nós"]
-        for i in range(int(nno)):
+        Pastatraba = arqexcel["Entrada de Dados"]
 
-            Matno[i, 0] = Pastatraba.cell(row=6 + i, column=1).value
-            Matno[i, 1] = Pastatraba.cell(row=6 + i, column=2).value
-            Matno[i, 2] = Pastatraba.cell(row=6 + i, column=3).value
-            if str(Pastatraba.cell(row=6 + i, column=4).value) == 'Sim ':
-                Matno[i, 3] = 1
-            else:
-                Matno[i, 3] = 0
-            if str(Pastatraba.cell(row=6 + i, column=5).value) == 'Sim ':
-                Matno[i, 4] = 1
-            else:
-                Matno[i, 4] = 0
-            if str(Pastatraba.cell(row=6 + i, column=6).value) == 'Sim ':
-                Matno[i, 5] = 1
-            else:
-                Matno[i, 5] = 0
-            if str(Pastatraba.cell(row=6 + i, column=7).value) == 'Sim ':
-                Matno[i, 6] = 1
-            else:
-                Matno[i, 6] = 0
+        self.vazão = Pastatraba.cell(row = 10, column = 1).value
+        self.rugosidade = Pastatraba.cell(row = 13, column = 1).value
+        self.teta = Pastatraba.cell(row = 7, column = 3).value
+        self.d = Pastatraba.cell(row = 10, column = 3).value
+        self.base_menor = Pastatraba.cell(row = 13, column = 3).value
+        self.z = Pastatraba.cell(row = 7, column = 5).value
 
-            Matno[i, 7] = Pastatraba.cell(row=6 + i, column=8).value
-            Matno[i, 8] = Pastatraba.cell(row=6 + i, column=9).value
-            Matno[i, 9] = Pastatraba.cell(row=6 + i, column=10).value
-
-        # Leitura da pasta 'Entrada Barras
-
-        Pastatraba = arqexcel["Entrada Barras"]
-        for i in range(int(nbar)):
-
-            Matbar[i, 0] = Pastatraba.cell(row=6 + i, column=1).value
-
-            if str(Pastatraba.cell(row=6 + i, column=2).value) == 'Engaste-Engaste':
-                Matbar[i, 1] = 11
-            if str(Pastatraba.cell(row=6 + i, column=2).value) == 'Engaste-Apoio':
-                Matbar[i, 1] = 10
-            if str(Pastatraba.cell(row=6 + i, column=2).value) == 'Apoio-Engasste':
-                Matbar[i, 1] = 1
-            if str(Pastatraba.cell(row=6 + i, column=2).value) == 'Apoio-Apoio':
-                Matbar[i, 1] = 0
-
-            Matbar[i, 2] = Pastatraba.cell(row=6 + i, column=3).value
-            Matbar[i, 3] = Pastatraba.cell(row=6 + i, column=4).value
-            Matbar[i, 4] = Pastatraba.cell(row=6 + i, column=5).value
-            Matbar[i, 5] = Pastatraba.cell(row=6 + i, column=6).value
-            Matbar[i, 6] = Pastatraba.cell(row=6 + i, column=7).value
-            Matbar[i, 7] = Pastatraba.cell(row=6 + i, column=8).value
-            Matbar[i, 8] = Pastatraba.cell(row=6 + i, column=9).value
-            Matbar[i, 9] = Pastatraba.cell(row=6 + i, column=10).value
-            Matbar[i, 10] = Pastatraba.cell(row=6 + i, column=11).value
-
-        # Leitura da pasta 'Carregamentos nos Nós'
-
-        Pastatraba = arqexcel["Car nos"]
-        for i in range(int(nno)):
-            Carno[i, 0] = Pastatraba.cell(row=6 + i, column=1).value
-            Carno[i, 1] = Pastatraba.cell(row=6 + i, column=2).value
-            Carno[i, 2] = Pastatraba.cell(row=6 + i, column=3).value
-            Carno[i, 3] = Pastatraba.cell(row=6 + i, column=4).value
-
-        # Leitura da pasta 'Carregamentos Barras'
-
-        Pastatraba = arqexcel["Car Barras"]
-        for i in range(int(nbar)):
-            Carbar[i, 0] = Pastatraba.cell(row=6 + i, column=1).value
-            Carbar[i, 1] = Pastatraba.cell(row=6 + i, column=2).value
-            Carbar[i, 2] = Pastatraba.cell(row=6 + i, column=3).value
-            Carbar[i, 3] = Pastatraba.cell(row=6 + i, column=4).value
-            Carbar[i, 4] = Pastatraba.cell(row=6 + i, column=5).value
-            Carbar[i, 5] = Pastatraba.cell(row=6 + i, column=6).value
-            Carbar[i, 6] = Pastatraba.cell(row=6 + i, column=7).value
-
-        aberto = 1
-        messagebox.showinfo('ABOUT', 'Arquivo carregado com sucesso')
-        self.areatexto.insert(END, 'Arquivo carregado com sucesso \n')
-        self.areatexto.update()
-
-    def Sub_Dimensionar(self):
-
-     global Nome_aquivo , aberto , Matno, Matbar, Carno, Carbar, nno, nbar,aux, desl , delta
-
-     escolha = messagebox.askquestion('CONFIRMAÇÃO!!!', 'Tem Certeza Que Deseja Realizar o Processamento?')
-     if escolha == 'yes' and aberto == 1 :
-
-        #Zerar o contador de saida
-        aux = 0
-
-        self.areatexto.insert(END, 'Iniciando o processamento ...\n')
-        self.areatexto.update()
-
-        self.areatexto.insert(END, 'Limpando arquivos ...\n')
-        self.areatexto.update()
-
-        # limpa a planilha
-        limpa(Nome_aquivo)
-
-        self.areatexto.insert(END, 'Alocando Matrizes ...\n')
-        self.areatexto.update()
-
-        # alocação de Matrizes
-        Matglo = np.zeros((4 * nno, 4 * nno))  # Matriz global
-        Fo = np.zeros((8, 1))  # Matriz de forças nodais
-        delta = np.zeros((8, 1))  # Matriz de deslocamentos na barra
-        Matfor = np.zeros((4 * nno, 1))  # Matriz de forças nodais ( Foreq + Fo )
-
-        # monta-se a matriz de força e de rigidez de cada barra
-        for bar in range(int(nbar)):
-
-            self.areatexto.insert(END, 'Matriz de Rigidez e Força da barra - ' + str(bar + 1) + '\n')
-            self.areatexto.update()
-
-            # Tipo de Calculo
-            tipo = int(Matbar[bar, 1])
-
-            # nó inicial e final da barra
-            noi = int(Matbar[bar, 2])
-            nof = int(Matbar[bar, 3])
-
-            # molas nos nós
-
-            khi = Matno[noi - 1, 7]
-            kvi = Matno[noi - 1, 8]
-            kgi = Matno[noi - 1, 9]
-
-            khf = 0
-            kvf = 0
-            kgf = 0
-
-            if bar+1 == nbar:
-                khf = Matno[nof - 1, 7]
-                kvf = Matno[nof - 1, 8]
-                kgf = Matno[nof - 1, 9]
-                print('ok')
-
-            # Coordenadas iniciais e finais da barra
-            xi = Matno[noi - 1, 1]
-            yi = Matno[noi - 1, 2]
-            xf = Matno[nof - 1, 1]
-            yf = Matno[nof - 1, 2]
-
-
-            # Propriedades das Barras
-            A = Matbar[bar, 4]  # área da barra
-            I = Matbar[bar, 5]  # inércia flexional
-            It = Matbar[bar, 6]  # inércia torcional
-            E = Matbar[bar, 7]  # Módulo de Elasticidade
-            poisson = Matbar[bar, 8]  # poisson
-            kvd = Matbar[bar, 9]  # Coeficiente de mola na barra
-            ptor = Matbar[bar, 10]  # porcentagem da rigidez a torção
-            P = 0  # Valor para futuro cálculo de flambagem
-            G = E / (2 * (1 + poisson))
-
-            # Carregamentos na Barra
-            qix = Carbar[bar, 1]  # carga inicial paralelo a barra
-            qfx = Carbar[bar, 2]  # carga final paralelo a barra
-            qiy = Carbar[bar, 3]  # carga inicial perpendicular a barra
-            qfy = Carbar[bar, 4]  # carga final perpendicular a barra
-            qig = Carbar[bar, 5]  # carga de torcão inicial na barra
-            qfg = Carbar[bar, 6]  # carga de torçao final na barra
-
-
-            # Carregamentos nos nós
-            Fo[0, 0] = 0
-            Fo[1, 0] = Carno[noi - 1, 1]
-            Fo[2, 0] = Carno[noi - 1, 2]
-            Fo[3, 0] = Carno[noi - 1, 3]
-            Fo[4, 0] = 0
-            Fo[5, 0] = 0
-            Fo[6, 0] = 0
-            Fo[7, 0] = 0
-
-            if bar+1 == nbar:
-                Fo[5, 0] = Carno[nof - 1, 1]
-                Fo[6, 0] = Carno[nof - 1, 2]
-                Fo[7, 0] = Carno[nof - 1, 3]
-
-
-            L = comprimento(xi, xf, yi, yf)  # comprimento da Barra
-
-            vsen, vcos = angulo(xi, xf, yi, yf)  # Angulo da Barra
-
-
-            mge = Smge(tipo, G, It * ptor / 100, E, I, A, L, kvd, P)  # Matriz de Rigidez local
-
-            Matcin = matriz_cinematica(vsen, vcos)  # natriz cinemática : B
-
-            Matcint = Matcin.transpose()  # Transposta de B
-
-            mge = Matcint.dot(mge.dot(Matcin))  # BT * re * B
-
-            # Soma as molas nodais a matriz de Rigidez
-            mge[1, 1] = mge[1, 1] + khi
-            mge[2, 2] = mge[2, 2] + kvi
-            mge[3, 3] = mge[3, 3] + kgi
-            mge[5, 5] = mge[5, 5] + khf
-            mge[6, 6] = mge[6, 6] + kvf
-            mge[7, 7] = mge[7, 7] + kgf
-
-            Mfeq = forcaequivale(tipo, L, qix, qfx, qiy, qfy, qig, qfg)  # Matriz de força equivalente
-
-            Mfeq = Matcint.dot(Mfeq)  # Matriz de força equivalente rotacionada para o eixo global
-
-            Matfor = forcanodal(Matfor, Fo, noi, nof, Mfeq)  # Matriz de Força nodal
-
-            Matglo = matrizglobal(Matglo, mge, noi, nof)  # monta a matriz global
-
-            Sub_said(mge, 1, Nome_aquivo,bar)  # imprime a matriz de rigidez local
-
-            Sub_said(Mfeq, 2, Nome_aquivo,bar)  # imprime o vetor de carga nodal local
-
-            aux += 9  # incrementa linha para a próxima barra
-
-        Sub_said(Matglo, 5, Nome_aquivo,bar)  # imprime a Matriz de rigidez global
-        Sub_said(Matfor, 6, Nome_aquivo,bar)  # imprime o vetor de carga globas
-
-        self.areatexto.insert(END, 'Condições de Contorno ...\n')
-        self.areatexto.update()
-
-        #  Impoe as condições de contorno
-        for nos in range(nno):
-            rx = int(Matno[nos, 3])
-            ry = int(Matno[nos, 4])
-            rz = int(Matno[nos, 5])
-            rg = int(Matno[nos, 6])
-            Matglo, Matfor = vinculacao(Matglo, Matfor, nos + 1, rx, ry, rz, rg)
-
-        Sub_said(Matglo, 3, Nome_aquivo,bar)  # imprime a Matriz de rigidez global
-        Sub_said(Matfor, 4, Nome_aquivo,bar)  # imprime o vetor de carga globas
-
-        self.areatexto.insert(END, 'Resolvendo o sistema...\n')
-        self.areatexto.update()
-
-        #  Resolução do sistema K * U = F
-        desl = linalg.solve(Matglo, Matfor)
-
-        Sub_said(desl, 7, Nome_aquivo,bar)  # imprime os deslocamentos
-
-        self.areatexto.insert(END, 'Cálculo dos Esforços Solicitantes...\n')
-        self.areatexto.update()
-
-        # Calcula os Esforços Solicigantes
-        Esforcos_solicitantes(Nome_aquivo)
-
-        self.areatexto.insert(END, 'Fim do processamento...\n' )
-        self.areatexto.update()
-
-     else:
-         messagebox.showinfo('ABOUT', 'Sem Entrada de Dados...\n')
+        print(f"Estado var1: {self.Var1.get()}")
+        print(f"Estado vazão: {self.vazão}")
+        print(f"Estado rugosidade: {self.rugosidade}")
+        print(f"Estado teta: {self.teta}")
+        print(f"Estado d: {self.d}")
+        print(f"Estado base_menor: {self.base_menor}")
+        print(f"Estado z: {self.z}")
 
     def Sub_Resultados(self):
         global Nome_aquivo
