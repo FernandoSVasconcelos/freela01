@@ -16,11 +16,8 @@ sys.path.insert(0, "/home/ubuntu/Downloads/freela01/controller")
 from functions import *
 
 Nome_aquivo = ''
-Carno = 0
-nno = 0
 aberto = 0
 Titulo = 'TITULO DO PROJETO'
-
 
 class Tela_About:
     def __init__(self, Raiz, Original):
@@ -46,6 +43,37 @@ class Tela_About:
         self.lb1 = Label(self.TelAbout, text="Programadores:  -Karolina Ribeiro\n\t       -Lucas Amaro",
                          font=('Times', '11'), bg='#EEE8AA')
         self.lb1.place(x=50, y=200)
+
+class GuiShow:
+    def __init__(self, Raiz, Original, valores_classe):
+        self.gui_show = Raiz
+        self.Teloriginal = Original
+        self.gui_show.title('Mostrar Valores')
+        self.gui_show.geometry("400x250+400+150")
+        self.gui_show.resizable(0, 0)
+        self.canvas = Canvas(self.gui_show, width=400, height=250, bg='#EEE8AA')
+        self.canvas.place(x=0, y=0)
+        self.lb1 = Label(self.gui_show, text = f"Formato do canal: {valores_classe.Var1.get()}",
+                         font=('Times', '11'), bg='#EEE8AA')
+        self.lb1.place(x=50, y=30)
+        self.lb1 = Label(self.gui_show, text = f"Vazão: {valores_classe.vazão}",
+                         font=('Times', '11'),bg='#EEE8AA')
+        self.lb1.place(x=50, y=50)
+        self.lb1 = Label(self.gui_show, text = f"Rugosidade: {valores_classe.rugosidade}",
+                         font=('Times', '11'), bg='#EEE8AA')
+        self.lb1.place(x=50, y=70)
+        self.lb1 = Label(self.gui_show, text = f"Teta: {valores_classe.teta}",
+                         font=('Times', '11'), bg='#EEE8AA')
+        self.lb1.place(x=50, y=90)
+        self.lb1 = Label(self.gui_show, text = f"d: {valores_classe.d}",
+                         font=('Times', '11'), bg='#EEE8AA')
+        self.lb1.place(x=50, y=110)
+        self.lb1 = Label(self.gui_show, text = f"Base menor: {valores_classe.base_menor}",
+                         font=('Times', '11'), bg='#EEE8AA')
+        self.lb1.place(x=50, y=130)
+        self.lb1 = Label(self.gui_show, text = f"z: {valores_classe.z}",
+                         font=('Times', '11'), bg='#EEE8AA')
+        self.lb1.place(x=50, y=150)
 
 class Tela_Principal:
     def __init__(self, Raiz):
@@ -84,7 +112,6 @@ class Tela_Principal:
         # ////Cria meunu superior  -  Arquivo
         self.arquivo = Menu(self.Menusup, tearoff=0)  # Cria um menu dentro do menu superior Arquivo
         self.arquivo.add_command(label="Abrir", command=self.Sub_Abrir)  # Adiciona Abrir ao menu
-        self.arquivo.add_command(label="Limpar", command=self.Sub_Limpa)  # Adiciona Abrir ao menu
         self.arquivo.add_command(label="Sair", command=self.Sub_Sair)  # Adiciona sair no sub menu
         self.Menusup.add_cascade(label="Arquivo", menu=self.arquivo)  # Adiciona  cascata
 
@@ -94,11 +121,12 @@ class Tela_Principal:
         # //// Cria  Menu superior - About
         self.Menusup.add_command(label="Sobre", command=self.Sub_About)
 
+        self.Menusup.add_command(label="Mostrar Valores", command=self.show_values)
+
         # //// Cria  Menu superior - Sair
         self.Menusup.add_command(label="Sair", command=self.Sub_Sair)
 
-
-        self.Var1 = StringVar()
+        self.Var1 = StringVar(value="1")
         
         ChkBttn = Radiobutton(self.TelPrin, width = 15, variable = self.Var1, text = 'Retangular', value = 'Retangular')
         ChkBttn.place(x = 12, y = 25)
@@ -131,6 +159,14 @@ class Tela_Principal:
         Tela_About(self.Telabout, self.TelPrin)
         self.Telabout.protocol("WM_DELETE_WINDOW", self.on_close_about)
 
+    def show_values(self):
+        self.close_show = Toplevel(self.TelPrin)
+        GuiShow(self.close_show, self.TelPrin, self)
+        self.close_show.protocol("WM_DELETE_WINDOW", self.on_close_show)
+
+    def on_close_show(self):
+        self.close_show.destroy()
+
     def on_close_about(self):
         self.Telabout.destroy()
 
@@ -145,17 +181,14 @@ class Tela_Principal:
     def Sub_Abrir(self):
         global  Nome_aquivo , Titulo
 
-        entrada_arquivo = filedialog.askopenfile(initialdir="/", title="Abrir arquivo",
+        entrada_arquivo = filedialog.askopenfile(initialdir="/home/ubuntu/Documentos/freela01", title="Abrir arquivo",
                                                filetypes=(("Entrada", "*.XLSX"), ("all files", "*.*")))
         if entrada_arquivo != None:
             Nome_aquivo = entrada_arquivo.name
             Titulo = Nome_aquivo
 
-    def Sub_Limpa(self):
-         self.areatexto.delete('1.0',END)
-
     def Entrada_Dados(self):
-      global Matno, Matbar, Carno, Carbar, nno, nbar, Nome_aquivo , aberto
+      global Nome_aquivo , aberto
       if Nome_aquivo == '' :
           messagebox.showinfo('ABOUT', 'Abra um arquivo Primeiro')
       else:
@@ -169,14 +202,6 @@ class Tela_Principal:
         self.d = Pastatraba.cell(row = 10, column = 3).value
         self.base_menor = Pastatraba.cell(row = 13, column = 3).value
         self.z = Pastatraba.cell(row = 7, column = 5).value
-
-        print(f"Estado var1: {self.Var1.get()}")
-        print(f"Estado vazão: {self.vazão}")
-        print(f"Estado rugosidade: {self.rugosidade}")
-        print(f"Estado teta: {self.teta}")
-        print(f"Estado d: {self.d}")
-        print(f"Estado base_menor: {self.base_menor}")
-        print(f"Estado z: {self.z}")
 
     def Sub_Resultados(self):
         global Nome_aquivo
