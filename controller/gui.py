@@ -181,7 +181,7 @@ class Tela_Principal:
     def Sub_Abrir(self):
         global  Nome_aquivo , Titulo
 
-        entrada_arquivo = filedialog.askopenfile(initialdir="/home/ubuntu/Documentos/freela01", title="Abrir arquivo",
+        entrada_arquivo = filedialog.askopenfile(initialdir="/home/ubuntu/Documentos/freela01/files", title="Abrir arquivo",
                                                filetypes=(("Entrada", "*.XLSX"), ("all files", "*.*")))
         if entrada_arquivo != None:
             Nome_aquivo = entrada_arquivo.name
@@ -202,6 +202,8 @@ class Tela_Principal:
         self.d = Pastatraba.cell(row = 10, column = 3).value
         self.base_menor = Pastatraba.cell(row = 13, column = 3).value
         self.z = Pastatraba.cell(row = 7, column = 5).value
+
+        get_valores(self)
 
     def Sub_Resultados(self):
         global Nome_aquivo
