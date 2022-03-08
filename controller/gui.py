@@ -23,56 +23,60 @@ class Tela_About:
     def __init__(self, Raiz, Original):
         self.TelAbout = Raiz
         self.Teloriginal = Original
+
         self.TelAbout.title('Sobre')
         self.TelAbout.geometry("400x250+400+150")
         self.TelAbout.resizable(0, 0)
+
         self.canvas = Canvas(self.TelAbout, width=380, height=230, bg='#EEE8AA')
         self.canvas.place(x=10, y=10)
-        self.lb1 = Label(self.TelAbout, text="PUC Minas - Poços de Caldas",
-                         font=('Times', '13', 'bold'), bg='#EEE8AA')
+
+        self.lb1 = Label(self.TelAbout, text="PUC Minas - Poços de Caldas", font=('Times', '13', 'bold'), bg='#EEE8AA')
         self.lb1.place(x=80, y=20)
-        self.lb1 = Label(self.TelAbout, text="ESCREVER SOBRE O METODO UTILIZADO",
-                         font=('Times', '11'),bg='#EEE8AA')
+
+        self.lb1 = Label(self.TelAbout, text="ESCREVER SOBRE O METODO UTILIZADO", font=('Times', '11'),bg='#EEE8AA')
         self.lb1.place(x=50, y=80)
-        self.lb1 = Label(self.TelAbout, text="Data : 01/02/2022",
-                         font=('Times', '11'), bg='#EEE8AA')
+
+        self.lb1 = Label(self.TelAbout, text="Data : 01/02/2022", font=('Times', '11'), bg='#EEE8AA')
         self.lb1.place(x=50, y=150)
-        self.lb1 = Label(self.TelAbout, text="Versão: V1.0",
-                         font=('Times', '11'), bg='#EEE8AA')
+
+        self.lb1 = Label(self.TelAbout, text="Versão: V1.0", font=('Times', '11'), bg='#EEE8AA')
         self.lb1.place(x=50, y=130)
-        self.lb1 = Label(self.TelAbout, text="Programadores:  -Karolina Ribeiro\n\t       -Lucas Amaro",
-                         font=('Times', '11'), bg='#EEE8AA')
+
+        self.lb1 = Label(self.TelAbout, text="Programadores:  -Karolina Ribeiro\n\t       -Lucas Amaro", font=('Times', '11'), bg='#EEE8AA')
         self.lb1.place(x=50, y=200)
 
 class GuiShow:
     def __init__(self, Raiz, Original, valores_classe):
         self.gui_show = Raiz
         self.Teloriginal = Original
+
         self.gui_show.title('Mostrar Valores')
         self.gui_show.geometry("400x250+400+150")
         self.gui_show.resizable(0, 0)
+
         self.canvas = Canvas(self.gui_show, width=400, height=250, bg='#EEE8AA')
         self.canvas.place(x=0, y=0)
-        self.lb1 = Label(self.gui_show, text = f"Formato do canal: {valores_classe.Var1.get()}",
-                         font=('Times', '11'), bg='#EEE8AA')
+
+        self.lb1 = Label(self.gui_show, text = f"Formato do canal: {valores_classe.Var1.get()}", font=('Times', '11'), bg='#EEE8AA')
         self.lb1.place(x=50, y=30)
-        self.lb1 = Label(self.gui_show, text = f"Vazão: {valores_classe.vazão}",
-                         font=('Times', '11'),bg='#EEE8AA')
+
+        self.lb1 = Label(self.gui_show, text = f"Vazão: {valores_classe.vazão}", font=('Times', '11'),bg='#EEE8AA')
         self.lb1.place(x=50, y=50)
-        self.lb1 = Label(self.gui_show, text = f"Rugosidade: {valores_classe.rugosidade}",
-                         font=('Times', '11'), bg='#EEE8AA')
+
+        self.lb1 = Label(self.gui_show, text = f"Rugosidade: {valores_classe.rugosidade}", font=('Times', '11'), bg='#EEE8AA')
         self.lb1.place(x=50, y=70)
-        self.lb1 = Label(self.gui_show, text = f"Teta: {valores_classe.teta}",
-                         font=('Times', '11'), bg='#EEE8AA')
+
+        self.lb1 = Label(self.gui_show, text = f"Teta: {valores_classe.teta}", font=('Times', '11'), bg='#EEE8AA')
         self.lb1.place(x=50, y=90)
-        self.lb1 = Label(self.gui_show, text = f"d: {valores_classe.d}",
-                         font=('Times', '11'), bg='#EEE8AA')
+
+        self.lb1 = Label(self.gui_show, text = f"d: {valores_classe.d}", font=('Times', '11'), bg='#EEE8AA')
         self.lb1.place(x=50, y=110)
-        self.lb1 = Label(self.gui_show, text = f"Base menor: {valores_classe.base_menor}",
-                         font=('Times', '11'), bg='#EEE8AA')
+
+        self.lb1 = Label(self.gui_show, text = f"Base menor: {valores_classe.base_menor}", font=('Times', '11'), bg='#EEE8AA')
         self.lb1.place(x=50, y=130)
-        self.lb1 = Label(self.gui_show, text = f"z: {valores_classe.z}",
-                         font=('Times', '11'), bg='#EEE8AA')
+
+        self.lb1 = Label(self.gui_show, text = f"z: {valores_classe.z}", font=('Times', '11'), bg='#EEE8AA')
         self.lb1.place(x=50, y=150)
 
 class Tela_Principal:
@@ -83,21 +87,27 @@ class Tela_Principal:
         self.d = 0
         self.base_menor = 0
         self.z = 0
+        self.path = ''
 
         self.TelPrin = Raiz
         self.agora = datetime.now()
+        
         self.TelPrin.title(Titulo)
         self.TelPrin.geometry("1000x545+150+10") 
         self.TelPrin.resizable(0, 0)
+
         self.canvas = Canvas(self.TelPrin, width=200, height=30, bg='#DCDCDC')
         self.canvas.place(x=0, y=510)
+
         self.canvas = Canvas(self.TelPrin, width=800, height=30, bg='Silver')
         self.canvas.place(x=200, y=510)
+
         self.Relogio = Label(self.TelPrin, text=self.agora.strftime('%d/%m/%Y       %H:%M:%S'),
                                            font=('Times', '10', 'bold'),
                                            bg='#DCDCDC',
                                            relief = "sunken")
         self.Relogio.place(x=5, y=515)
+
         self.ajud = Label(self.TelPrin, text="ESCREVER SOBRE O OBJETIVO DO PROJETO - Versão : V1.0                          " ,
                                         font=('Times', '10', 'bold'),
                                         bg='Silver',
@@ -137,9 +147,7 @@ class Tela_Principal:
         ChkBttn3 = Radiobutton(self.TelPrin, width = 15, variable = self.Var1, text = 'Trapezoidal Simétrico', value = 'Trapezoidal Simétrico')
         ChkBttn3.place(x = 40, y = 85)
 
-        button1 = Button(self.TelPrin, 
-                        text = "Calcular",
-                        command=self.Entrada_Dados)
+        button1 = Button(self.TelPrin, text = "Calcular", command=self.calcular)
         button1.place(x = 250, y = 60)
 
         #  atualização de tela
@@ -186,23 +194,21 @@ class Tela_Principal:
         if entrada_arquivo != None:
             Nome_aquivo = entrada_arquivo.name
             Titulo = Nome_aquivo
+            excel_file = load_workbook(Nome_aquivo)
+            self.path = excel_file["Entrada de Dados"]
 
-    def Entrada_Dados(self):
+            self.vazão = self.path.cell(row = 10, column = 1).value
+            self.rugosidade = self.path.cell(row = 13, column = 1).value
+            self.teta = self.path.cell(row = 7, column = 3).value
+            self.d = self.path.cell(row = 10, column = 3).value
+            self.base_menor = self.path.cell(row = 13, column = 3).value
+            self.z = self.path.cell(row = 7, column = 5).value
+
+    def calcular(self):
       global Nome_aquivo , aberto
       if Nome_aquivo == '' :
           messagebox.showinfo('ABOUT', 'Abra um arquivo Primeiro')
       else:
-
-        arqexcel = load_workbook(Nome_aquivo)
-        Pastatraba = arqexcel["Entrada de Dados"]
-
-        self.vazão = Pastatraba.cell(row = 10, column = 1).value
-        self.rugosidade = Pastatraba.cell(row = 13, column = 1).value
-        self.teta = Pastatraba.cell(row = 7, column = 3).value
-        self.d = Pastatraba.cell(row = 10, column = 3).value
-        self.base_menor = Pastatraba.cell(row = 13, column = 3).value
-        self.z = Pastatraba.cell(row = 7, column = 5).value
-
         get_valores(self)
 
     def Sub_Resultados(self):
