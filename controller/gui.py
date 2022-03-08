@@ -136,19 +136,22 @@ class Tela_Principal:
         # //// Cria  Menu superior - Sair
         self.Menusup.add_command(label="Sair", command=self.Sub_Sair)
 
-        self.Var1 = StringVar(value="1")
+        self.lb1 = Label(self.TelPrin, text = "Formato do Canal: ", font=('Times', '11'))
+        self.lb1.place(x = 5, y = 55)
+
+        self.Var1 = StringVar(value="Sem Formato")
         
         ChkBttn = Radiobutton(self.TelPrin, width = 15, variable = self.Var1, text = 'Retangular', value = 'Retangular')
-        ChkBttn.place(x = 12, y = 25)
+        ChkBttn.place(x = 192, y = 25)
         
         ChkBttn2 = Radiobutton(self.TelPrin, width = 15, variable = self.Var1, text = 'Triangular', value = 'Triangular')
-        ChkBttn2.place(x = 10, y = 55)
+        ChkBttn2.place(x = 192, y = 55)
 
-        ChkBttn3 = Radiobutton(self.TelPrin, width = 15, variable = self.Var1, text = 'Trapezoidal Simétrico', value = 'Trapezoidal Simétrico')
-        ChkBttn3.place(x = 40, y = 85)
+        ChkBttn3 = Radiobutton(self.TelPrin, width = 15, variable = self.Var1, text = 'Trapezoidal', value = 'Trapezoidal Simétrico')
+        ChkBttn3.place(x = 195, y = 83)
 
         button1 = Button(self.TelPrin, text = "Calcular", command=self.calcular)
-        button1.place(x = 250, y = 60)
+        button1.place(x = 130, y = 150)
 
         #  atualização de tela
         self.alteracao()
